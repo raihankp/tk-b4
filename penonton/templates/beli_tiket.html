@@ -130,8 +130,8 @@
               url: "{% url 'penonton:show_beli_tiket' %}?id={{ id_pertandingan }}",
               data: {
                 csrfmiddlewaretoken: '{{ csrf_token }}',
-                username: $("#jenis_tiket option:selected").val(),
-                password: $("#jenis_pembayaran option:selected").val(),
+                jenis_tiket: $("#jenis_tiket option:selected").val(),
+                jenis_pembayaran: $("#jenis_pembayaran option:selected").val(),
               },
               success: function(data) {
                 if (data.success == 'false') {
