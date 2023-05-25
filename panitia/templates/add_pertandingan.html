@@ -1,0 +1,114 @@
+{% comment %} Sebagai template dashboard sekaligus parent dari template yang lainnya {% endcomment %}
+
+{% load static %}
+{% include 'navbar_panitia.html' %}
+
+<!DOCTYPE html>
+<html>
+    {% block meta %}
+    <head>
+        <title>Pembuatan Pertandingan</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    </head>
+    {% endblock meta %}
+
+    <style>
+        table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        th,
+        td {
+            padding: 5px;
+            margin: 5px;
+            border: 1px solid black;
+        }
+        th {
+            color: #55509c;
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 25vh;
+        }
+        input[type="text"],
+        input[type="password"]{
+            border: none;
+            border-radius: 20px;
+            background-color: #fff;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            width: 100%;
+        }
+
+        input[type="submit"] {
+            background-color: #7067f5;
+            border: none;
+            border-radius: 20px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0059b3;
+        }
+        
+    </style>
+
+    <body>
+        {% block content %}
+        <div class="page-title">
+            <h1>Pembuatan Pertandingan</h1>
+        </div>
+        <div class="wrapper">
+            <div class="box">
+                <div class="daftar-rapat" style="margin: 40px 30px;">
+                    <!-- <h1 style="margin-bottom: 20px;color: #7067f5;">List Rapat</h1> -->
+                    <form action="/action_page.php">
+                    <label for="stadium">Stadium:</label>
+                        <select name="stadium" id="stadium" style="border-radius: 20px;">
+                          <option value="pekansari">Pakansari Stadium</option>
+                          <option value="sadarwisata">Sadar Wisata Stadium</option>
+                          <option value="mandalakrida">Mandala Krida Stadium</option>
+                          <option value="kapteniwayandipta">Kapten I Wayan Dipta Stadium</option>
+                          <option value="manahan">Manahan Stadium</option>
+                          <option value="sijalakharupat">Si Jalak Harupat Stadium</option>
+                          <option value="gajayana">Gajayana Stadium</option>
+                        </select>
+                        <br><br>
+                    </form>
+
+                    <div class="flex flex-wrap mb-6">
+                        <label class="w-full mb-2" for="calendar">Tanggal: </label>
+                        <input class="w-full border border-gray-400 p-2 rounded-lg" type="date" id="calendar" required style="border-radius: 20px;">
+                    </div>
+
+                    <input type="submit" value="Next"> 
+
+            
+                    <table style="width: 100%; text-align: center; border-collapse: collapse;" border="1">
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>
+
+
+<!-- links -->
+<!-- https://www.w3schools.com/tags/tag_select.asp -->

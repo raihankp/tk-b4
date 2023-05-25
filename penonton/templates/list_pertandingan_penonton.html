@@ -1,0 +1,73 @@
+{% comment %} Sebagai template dashboard sekaligus parent dari template yang lainnya {% endcomment %}
+
+{% load static %}
+{% include 'navbar_penonton.html' %}
+
+<!DOCTYPE html>
+<html>
+    {% block meta %}
+    <head>
+        <title>List Pertandingan</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    </head>
+    {% endblock meta %}
+
+    <style>
+        table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        th,
+        td {
+            padding: 10px 20px;
+            margin: 5px;
+            border: 1px solid black;
+        }
+        th {
+            color: #55509c;
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 25vh;
+        }
+    </style>
+
+    <body>
+        {% block content %}
+        <div class="page-title">
+            <h1>List Pertandingan</h1>
+        </div>
+        <div class="wrapper">
+            <div class="box">
+                <div class="daftar-rapat" style="margin: 40px 30px;">
+                    <table style="width: 100%; text-align: center; border-collapse: collapse;" border="1">
+                        <tr style="color: #55509c;">
+                                <th>Tim Bertanding</th>
+                                <th>Stadium</th>
+                                <th>Tanggal dan Waktu</th>
+                        </tr>
+                        {% for data in pertandingan %}
+                        <tr>
+                            <td>{{ data.tim.0 }} vs {{ data.tim.1 }}</td>
+                            <td>{{ data.nama_stadium}}</td>
+                            <td>{{ data.date }}, {{ data.start_time }} - {{ data.end_time }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>

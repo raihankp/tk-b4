@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    {% include 'navbar_panitia.html' %}
+
+    <title>Mulai Pertandingan</title>
+    <style>
+        table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        th,
+        td {
+            padding: 20px;
+            margin: 5px;
+            border: 1px solid black;
+        }
+        th {
+            color: #55509c;
+        }
+        a {
+            color: #7067f5;
+            font-size: 16px;
+            transition: all 0.3s ease 0s;
+        }
+        a:hover {
+            color: #5248df;
+            font-size: large;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .box-content {
+            width: auto;
+            height: auto;
+            margin: 50px 50px;
+            padding: 70px 100px;
+            box-shadow: 0 27px 87px rgba(0, 0, 0, 0.37);
+            border-radius: 25px;
+            /* overflow: hidden; */
+        }
+        .page-title {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .content {
+            text-align: center;
+        }
+        .content-title {
+            font-size: 25px;
+            color: #7067f5;
+            text-align: center;
+        }
+        .content button {
+            margin: 15px;
+            padding: 15px 80px;
+            color: white;
+        }
+
+    </style>
+{% endblock meta %}
+
+{% block content %}
+    <div class="page-title">
+        <h1>Mulai Pertandingan</h1>
+    </div>
+
+    <div class="wrapper">
+        <div class="box-content">
+            <div class="content">
+                <div >
+                    <table>
+                        <tr>
+                            <th>Tim 1</th>
+                            <th>Tim 2</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>{{data.nama_tim.0}}  </td>
+                            <td>{{data.nama_tim.1}}</td>
+                            <td><a href="{% url 'panitia:show_pilih_peristiwa' id_pertandingan=data.id_pertandingan nama_tim=data.nama_tim.0 %}">
+                                    Masukkan Peristiwa Tim 1</a><br><br>
+                                <a href="{% url 'panitia:show_pilih_peristiwa' id_pertandingan=data.id_pertandingan nama_tim=data.nama_tim.1 %}">
+                                    Masukkan Peristiwa Tim 2</a></td>
+                        </tr>
+                    </table>
+
+                    <button onclick="window.location.href='#'">Submit</button>
+
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+{% endblock %}

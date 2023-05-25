@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat";
+    background-color: #e3e9f7;
+}
+
+li, a, button {
+    font-weight: 500;
+    font-size: 14px;
+    color: #242424;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+header {
+    display: flex;
+    background: #fefefe;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 10%;
+}
+
+.dashboard {
+    cursor: pointer;
+    color: #242424;
+    margin-right: auto;
+}
+
+.nav__links {
+    list-style: none;
+    background-color: #fefefe;
+}
+
+.nav__links li {
+    border-radius: 20px;
+    display: inline-block;
+    padding: 0px 10px;
+    background-color: #fefefe;
+}
+
+.nav__links a {
+    border-radius: 20px;
+    transition: all 0.3s ease 0s;
+}
+
+.nav__links a:hover {
+    background: #7067f5;
+    padding: 7px;
+}
+
+button {
+    margin-left: 20px;
+    padding: 7px 25px;
+    cursor: pointer;
+    background-color: #7067f5;
+    border: none;
+    border-radius: 20px;
+    transition: all 0.3s ease 0s;
+}
+
+button:hover {
+    background-color: #5248df;
+}
+
+.box {
+    width: auto;
+    height: auto;
+    display: inline-block;
+    margin: 10px 50px;
+    position: absolute;
+    padding-top: 20px;
+    box-shadow: 0 27px 87px rgba(0, 0, 0, 0.37);
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.box-image {
+    float: left;
+    width: 30%;
+    height: 100px;
+    padding-left: 30px;
+}
+
+.image-manager {
+    border-radius: 50%;
+    padding: 30px 10px;
+}
+
+.box-text {
+    width: 70%;
+    float: left;
+    padding: 30px 30px;
+}
+
+.box-text h1 {
+    margin-bottom: 10px;
+}
+
+.box-text h3 {
+    margin-bottom: 40px;
+    font-weight: 200;
+}
+
+.box-text h2 {
+    font-size: large;
+    margin-bottom: 5px;
+}
+
+.page-title {
+    padding: 50px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    color: #7067f5;
+}
+
+.nama {
+    padding-bottom: 20px ;
+}
+
+.nama-role {
+    padding-bottom: 20px;
+}
+
+.personal-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.sec-1 {
+    margin-right: 150px;
+}
+
+.sec-2 {
+    margin-right: 180px;
+}
+
+.daftar-tim {
+    margin: 40px 30px;
+}
+
+.daftar-tim table {
+    width: 100%; 
+    border-collapse: collapse;
+}
+
+.daftar-tim td {
+    text-align: center;
+    padding: 3px 5px;
+}
+
+.daftar-tim th {
+    text-align: center;
+    padding: 5px 5px;
+    color: #55509c
+}
+
+.list-pemesanan td {
+    text-align: center;
+    padding: 10px 5px;
+}
+
+.list-pemesanan th {
+    text-align: center;
+    padding: 5px 5px;
+    color: #55509c
+}
+
+.sub-box {
+    display: inline-block;
+}

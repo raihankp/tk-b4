@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    {% include 'navbar_panitia.html' %}
+    <title>Manage Pertandingan</title>
+
+    <style>
+        table {
+            width: 80%;
+            text-align: center;
+            border-collapse: collapse;
+            margin: 30px auto 20px;
+        }
+        th,
+        td {
+            padding: 15px;
+            margin: 5px;
+            border: 1px solid black;
+        }
+        th {
+            color: #55509c;
+            background-color:#f2f9ff;
+        }
+        a {
+            color: #7067f5;
+            font-size: 16px;
+            transition: all 0.3s ease 0s;
+        }
+        a:hover {
+            color: #5248df;
+            font-size: large;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 50px;
+        }
+        .box-content {
+            width: auto;
+            height: auto;
+            margin: 10px 50px;
+            padding-top: 30px;
+            box-shadow: 0 27px 87px rgba(0, 0, 0, 0.37);
+            border-radius: 25px;
+            overflow: hidden;
+        }
+        .page-title {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        .announcement {
+            text-align: center; 
+            padding: 20px;
+            margin: 40px;
+        }
+        .content button {
+            margin: 20px;
+            padding: 15px 80px;
+            color: white;
+        }
+        .content {
+            width: 100%;
+        }
+        .content-title {
+            font-size: 25px;
+            color: #55509c;
+        }
+    </style>
+
+{% endblock meta %}
+
+{% block content %}
+    <div class="page-title">
+        <h1>Manage Pertandingan</h1>
+    </div>
+
+    
+    {% if jumlahPertandingan %}
+        <!-- Manage Pertandingan -->
+
+        <div class="wrapper">
+            <div class="content box-content">
+                <div class="content">
+                    
+                    <div style="text-align: center; margin: 20px;">
+                        <div class="content-title" style="margin: 10px;">
+                            <h4>List Pertandingan Grup Stage</h4>
+                        </div>
+
+                        <table>
+                            <tr style="color: #55509c;">
+                                    <th>Grup</th>
+                                    <th>Tim</th>
+                                    <th>Waktu</th>
+                                    <th>Pemenang</th>
+                                    <th>Action</th>
+                            </tr>
+
+                            {% for data in pertandingan %}
+                            <tr>
+                                <td>A</td>
+                                <td>{{ data.tim.0 }} vs {{ data.tim.1 }}</td>
+                                <td>{{ data.start_datetime }}</td>
+                                <!-- Cek siapa pemenangnya dengan menyamakan id_pertandingan pada data dan dictionary pemenang -->
+                                {% for key, value in pemenang.items %}
+                                    {% now "Y-m-d" as todays_date %}
+
+                                    {% if key == data.id_pertandingan %}
+                                        <td>{{value}}</td>
+                                    {% endif %}
+
+                                {% endfor %}
+                                <td>
+                                    {% now "Y-m-d" as todays_date %}
+
+                                    {% if todays_date > data.end_datetime|date:"Y-m-d" %}
+                                        <a href="{% url 'panitia:show_peristiwa_tim' id_pertandingan=data.id_pertandingan nama_tim=data.tim.0 %}">
+                                            Lihat Peristiwa Tim 1</a><br><br>
+                                        <a href="{% url 'panitia:show_peristiwa_tim' id_pertandingan=data.id_pertandingan nama_tim=data.tim.1 %}">
+                                            Lihat Peristiwa Tim 2</a><br><br>
+                                        
+                                    {% else %}
+                                        <a href="{% url 'panitia:show_mulai_pertandingan' id_pertandingan=data.id_pertandingan %}">Mulai</a>
+                                    {% endif %}
+                                </td>  
+                            </tr>
+
+                            {% endfor %}
+                            
+                            <tr>
+                                <td>B</td>
+                                <td>E vs F</td>
+                                <td>Agustus 5, 2023, 8 a.m.</td>
+                                <td>-</td>
+                                <td>Belum Waktunya</td>
+                            </tr>
+                            <tr>
+                                <td>B</td>
+                                <td>G vs H</td>
+                                <td>Agustus 6, 2023, 8 a.m.</td>
+                                <td>-</td>
+                                <td>Belum Waktunya</td>
+                            </tr>
+                        </table>
+
+                        <button onclick="window.location.href='{% url 'panitia:show_panitia' %}'">Finish</button>
+                        <!-- <a href="{% url 'panitia:show_panitia' %}">[Finish]</a></td> -->
+
+                    </div>
+                </div>
+            </div>  
+            
+        </div> 
+    {% else %}
+        <!-- Jika belum ada pertandingan, buat pertandingan -->
+
+        <div class="wrapper">
+            <div class="box-content">
+                <div class="content">
+                    <div class="announcement">
+                        <p>Pertandingan Belum Lengkap!<br>Klik Tombol Next untuk Membuat Pertandingan</p>
+                        <div >
+                            <td><button onclick="window.location.href='#'">Next</button></td>
+                        </div>          
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Sudah Mendapat Pemenang Akhir -->
+
+        <!-- <div class="wrapper">
+            <div class="box-content">
+                <div class="content">
+                    
+                    <div class="announcement">
+                        <p>Ini Akhir Musim!<br>Klik Tombol Next untuk Membuat Pertandingan Baru</p>
+                        <div>
+                            <td><button onclick="window.location.href='#'">Next</button></td>
+                        </div>          
+                    </div>
+                </div>
+
+            </div>
+        </div> -->
+    {% endif %}
+    
+
+
+{% endblock content %}
+

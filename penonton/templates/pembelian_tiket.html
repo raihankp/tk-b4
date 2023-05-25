@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    {% include 'navbar_penonton.html' %}
+    <title>Pembelian Tiket</title>
+
+    <style>
+        table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+            margin: 30px auto 20px;
+        }
+        th,
+        td {
+            padding: 15px;
+            margin: 5px;
+            border: 1px solid black;
+        }
+        th {
+            color: #55509c;
+            background-color:#f2f9ff;
+        }
+        a {
+            color: #7067f5;
+            font-size: 16px;
+            transition: all 0.3s ease 0s;
+        }
+        a:hover {
+            color: #5248df;
+            font-size: large;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 50px;
+            align-items: flex-start;
+
+        }
+        .box-content {
+            width: auto;
+            height: auto;
+            margin: 10px 10px;
+            padding: 50px 80px;
+            box-shadow: 0 27px 87px rgba(0, 0, 0, 0.37);
+            border-radius: 25px;
+            overflow: hidden;
+        }
+        .page-title {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        .content button {
+            margin: 20px;
+            padding: 15px 80px;
+            color: white;
+        }
+        .content {
+            text-align: center;
+            width: auto;
+        }
+        .content-title {
+            text-align: center;
+            font-size: 25px;
+            color: #7067f5;
+            margin: 20px 0px;
+        }
+
+        .my-div {
+            margin: 20px;
+        }
+
+        input[type="submit"] {
+            background-color: #7067f5;
+            border: none;
+            border-radius: 20px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+        }
+      
+        input[type="submit"]:hover {
+            background-color: #0059b3;
+        }
+    </style>
+
+{% endblock meta %}
+
+{% block content %}
+    <div class="page-title">
+        <h1>Pembelian Tiket</h1>
+    </div>
+
+    <!-- 1. Pilih Stadium -->
+    
+
+    <div class="wrapper">
+        <div class="box-content">
+            <div class="content-title">
+                <h4>Pilih Stadium</h4>
+            </div>
+
+            <div class="content">
+                <div>
+                    <form id='pilih-stadium-waktu' method="POST" action="{% url 'penonton:show_pilih_waktu' %}">
+                        {% csrf_token %}
+                        <div class = "my_div">
+                            <label for="stadium">Stadium:</label>
+                            <select name="stadium" id="stadium" required>
+                            {% for data in stadium %}
+                                <option value="{{data.nama}}">{{data.nama}}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                        <div class = "my_div">
+                            <label for="tanggal">Tanggal:</label>
+                            <input type="date" id="tanggal" name="tanggal" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD" required></input>
+                        </div>
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>  
+        </div>  
+    </div> 
+    <br>
+
+
+    {% comment %} <!-- 2. List Waktu Stadium -->
+    
+
+    <div class="wrapper">
+        <div class="box-content">
+            <div class="content-title">
+                <h4>List Waktu Stadium</h4>
+            </div>
+
+            <div class="content">
+                <table>
+                    <tr>
+                        <th>List Waktu</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>07.00 - 09.00</td>
+                        <td><a href="#">Next</a></td>
+                    </tr>
+                </table>
+            </div>  
+        </div>
+    </div> 
+    <br>
+    
+    <!-- 3. List Pertandingan -->
+    
+    <div class="wrapper">
+        <div class="box-content">
+            <div class="content-title">
+                <h4>List Pertandingan</h4>
+            </div>
+
+            <div class="content">
+                <table>
+                    <tr>
+                        <th>Tim 1</th>
+                        <th>Tim 2</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>A</td>
+                        <td>B</td>
+                        <td><a href="{% url 'penonton:show_beli_tiket' %}">Pilih</a></td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td>D</td>
+                        <td><a href="{% url 'penonton:show_beli_tiket' %}">Pilih</a></td>
+                    </tr>
+                    <tr>
+                        <td>E</td>
+                        <td>F</td>
+                        <td><a href="{% url 'penonton:show_beli_tiket' %}">Pilih</a></td>
+                    </tr>
+                    <tr>
+                        <td>F</td>
+                        <td>G</td>
+                        <td><a href="{% url 'penonton:show_beli_tiket' %}">Pilih</a></td>
+                    </tr>
+                </table>
+                
+
+
+            </div>  
+        </div>
+    </div> {% endcomment %}
+
+{% endblock content %}
+

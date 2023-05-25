@@ -1,0 +1,66 @@
+{% comment %} Sebagai template dashboard sekaligus parent dari template yang lainnya {% endcomment %}
+
+{% load static %}
+{% include 'navbar_panitia.html' %}
+
+<!DOCTYPE html>
+<html>
+    {% block meta %}
+    <head>
+        <title>Rapat</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    </head>
+    {% endblock meta %}
+
+    <style>
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 25vh;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            text-align: center;
+        }      
+    </style>
+
+    <body>
+        {% block content %}
+        <div class="page-title">
+            {% for data in judul %}
+            <h1>Rapat Pertandingan {{ data.tim.0 }} vs {{ data.tim.1 }} </h1>
+            {% endfor %}
+        </div>
+        <div class="wrapper">
+            <div class="box">
+                <div class="daftar-rapat" style="margin: 40px 30px;">
+                    <!-- <form action="process_login.php" method="POST"> -->
+                    <form id="form-register" method="POST">
+                    
+                        <h1 style="margin-bottom: 20px;color: #7067f5;">Isi Rapat</h1>
+
+                        <textarea type="text" id="notulaRapat" name="notulaRapat" placeholder="Isi notula di sini" style="width: 500px;" form="form-register"></textarea>
+
+                        <a href="{% url 'panitia:show_panitia'%}"><button onclick="window.location.href='#'">Submit</button></a>
+                  
+                        <!-- <?php if (isset($_GET['error'])) { ?>
+                          <div class="error-message">Laporan rapat tidak diisi.</div>
+                        <?php } ?> -->
+                    </form>
+                </div> 
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>

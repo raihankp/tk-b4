@@ -1,0 +1,96 @@
+{% comment %} Sebagai template dashboard sekaligus parent dari template yang lainnya {% endcomment %}
+
+{% load static %}
+{% include 'navbar_panitia.html' %}
+
+<!DOCTYPE html>
+<html>
+    {% block meta %}
+    <head>
+        <title>Dashboard</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"
+            integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css"
+            integrity="sha512-wJgJNTBBkLit7ymC6vvzM1EcSWeM9mmOu+1USHaRBbHkm6W9EgM0HY27+UtUaprntaYQJF75rc8gjxllKs5OIQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+    </head>
+    {% endblock meta %}
+
+    <body>
+        {% block content %}
+        <div class="page-title">
+            <h1>Dashboard</h1>
+        </div>
+        <div class="wrapper">
+            <div class="box">
+                <div class="sub-box">
+                    <div class="box-image">
+                        <img class="image-manager" src="{% static 'images/user_profile.png' %}">
+                    </div>
+                    <div class="box-text">
+                        <h1>{{profile.nama_depan}} {{profile.nama_belakang}}</h1>
+                        <h3 style="margin-bottom: 10px;">Panitia</h3>
+                        <hr class="solid" style="margin-bottom: 20px;">
+    
+                        <div class="personal-info">
+                            <div class="sec-1">
+                                <h2>Email</h2>
+                                <h3>{{profile.email}}</h3>
+        
+                                <h2>Nomor HP</h2>
+                                <h3>{{profile.nomor_hp}}</h3>
+    
+                                <h2>Status</h2>
+                                <h3 style="margin-bottom: 5px;">{{status.stat}}</h3>
+                            </div>
+        
+                            <div class="sec-2">
+                                <h2>Jabatan</h2>
+                                <h3>{{profile.jabatan}}</h3>
+    
+                                <h2>Alamat</h2>
+                                <p>{{profile.alamat}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="daftar-rapat" style="margin: 40px 30px;">
+                    <h1 style="margin-bottom: 20px;color: #7067f5;">Upcoming Meetings</h1>
+                    <table style="width: 100%; text-align: center; border-collapse: collapse;" border="1">
+                        {% if not rapat %}
+                            <h3 style="margin-bottom: 20px;color: #55509c; text-align: center;">Belum Ada Rapat</h3>
+                        {% else %}
+                            <tr style="color: #55509c;">
+                                <th>Rapat Tim</th>
+                                <th>Stadium</th>
+                                <th>Tanggal dan Waktu</th>
+                            </tr>
+                            {% for data in rapat %}
+                                <tr>
+                                    <td>{{data.tim}}</td>
+                                    <td>{{data.nama}}</td>
+                                    <td>{{data.start_datetime}} - {{data.end_datetime}}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}   
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>

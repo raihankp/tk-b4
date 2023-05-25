@@ -1,0 +1,149 @@
+{% extends 'base_manajer.html' %}
+{% load static %}
+
+{% block meta %}
+<title>List Waktu Stadium</title>
+{% endblock meta %}
+
+{% block content %}
+<style>
+     .button-pesan h4 {
+        color: #6258e6;
+    }
+    .button-pesan h4:hover {
+    color: #5248df;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 0.8rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .success-message {
+      color: rgb(38, 169, 117);
+      font-size: 0.8rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+</style>
+
+<div class="page-title" style="text-align: center;">
+    <h1>List Waktu Stadium</h1>
+</div>
+
+<div class="wrapper" style="display: flex; justify-content: center; height: 25vh;">
+    <div class="box">
+        <div class="list-pemesanan" style=" margin: 30px 30px;">
+            <form id="pilih-waktu" method="POST">
+                <table style="width:max-content; border-collapse: collapse;"border="1px">
+                    <tr>
+                        <th colspan="2">List Waktu Stadium Gelora Bung Tomo</th>
+                    </tr>
+
+                    <tr>
+                        <th>List Waktu</th>
+                        <th>Action</th>
+                    </tr>
+
+                    <tr>
+                        <td>09:00 - 11:00</td>
+                        <td>
+                            <div class="button-pesan">
+                            {% if status and time == '' or time == '09:00:00' %}
+                                <h5 style="color: black;">Dipesan</h5>
+                            {% else %}
+                                <a id="sesi-satu" href="{% url 'manajer:peminjaman_stadium' %}" class="hover-style"><h4>Pesan</h4></a>
+                            {% endif %}
+                            
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>14:00 - 16:00</td>
+                        <td>
+                            <div class="button-pesan">
+                            {% if status and time == '' or time == '14:00:00' %}
+                                <h5 style="color: black;">Dipesan</h5>
+                            {% else %}
+                                <a id="sesi-dua" href="{% url 'manajer:peminjaman_stadium' %}" class="hover-style"><h4>Pesan</h4></a>
+                            {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+              </table>
+            </form>
+            <div id="message"></div> 
+        </div>
+    </div>
+
+    <script>
+        $("#sesi-satu").click(function(e) {
+            e.preventDefault();
+            $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "{% url 'manajer:list_waktu_stadium' id tanggal %}",
+            data: {
+                waktu_mulai: "09:00:00",
+                waktu_akhir: "11:00:00"
+            },
+            success: function(data) {
+                if (data.success == 'true') { // Kalau registrasi tim berhasil
+                    let htmlString = ``
+                    htmlString += `\n
+                    <div class="success-message">${data.message}</div>`
+                    document.getElementById("message").innerHTML = htmlString
+                    setTimeout(function () {
+                        document.location.href = '/manajer/peminjaman_stadium'
+                    }, 1000); //will call the function after 2 secs.
+                } else { // Kalau registrasi tim gagal
+                    let htmlString = ``
+                    htmlString += `\n
+                    <div class="error-message">${data.message}</div>`
+                    document.getElementById("message").innerHTML = htmlString
+                }
+            }
+          })
+        });
+
+        $("#sesi-dua").click(function(e) {
+            e.preventDefault();
+            $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "{% url 'manajer:list_waktu_stadium' id tanggal %}",
+            data: {
+                waktu_mulai: "14:00:00",
+                waktu_akhir: "16:00:00"
+            },
+            success: function(data) {
+                if (data.success == 'true') { // Kalau registrasi tim berhasil
+                    let htmlString = ``
+                    htmlString += `\n
+                    <div class="success-message">${data.message}</div>`
+                    document.getElementById("message").innerHTML = htmlString
+                    setTimeout(function () {
+                        document.location.href = '/manajer/peminjaman_stadium'
+                    }, 1000); //will call the function after 2 secs.
+                } else { // Kalau registrasi tim gagal
+                    let htmlString = ``
+                    htmlString += `\n
+                    <div class="error-message">${data.message}</div>`
+                    document.getElementById("message").innerHTML = htmlString
+                    setTimeout(function () {
+                        document.location.href = '/manajer/peminjaman_stadium/pilih_stadium'
+                    }, 1000);
+                }
+            }
+          })
+        });
+    </script>
+
+</div>
+
+
+{% endblock %}

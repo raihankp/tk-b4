@@ -1,0 +1,161 @@
+{% comment %} Sebagai template dashboard sekaligus parent dari template yang lainnya {% endcomment %}
+
+{% load static %}
+{% include 'navbar_panitia.html' %}
+
+<!DOCTYPE html>
+<html>
+    {% block meta %}
+    <head>
+        <title>Pembuatan Pertandingan</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    </head>
+    {% endblock meta %}
+
+    <style>
+        table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        th,
+        td {
+            padding: 5px;
+            margin: 5px;
+            border: 1px solid black;
+        }
+        th {
+            color: #55509c;
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 25vh;
+        }
+
+        button {
+            padding: 5px 15px;
+        }
+
+        input[type="submit"] {
+            background-color: #7067f5;
+            border: none;
+            border-radius: 20px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0059b3;
+        }
+    </style>
+
+    <body>
+        {% block content %}
+        <div class="page-title">
+            <h1>Pembuatan Pertandingan</h1>
+        </div>
+        <div class="wrapper">
+            <div class="box">
+                <div class="daftar-rapat" style="margin: 40px 30px;">
+                    <!-- <h1 style="margin-bottom: 20px;color: #7067f5;">List Pertandingan</h1> -->
+                    <table style="width: 100%; text-align: center; border-collapse: collapse;" border="1">
+
+                            <td colspan="2">
+                                <h3>Buat Pertandingan</h3>
+                                <br>
+                                <form action="/action_page.php">
+                                    <label for="stadium" style="float: left;">Pilih Wasit Utama:&nbsp;</label>
+                                        <select name="stadium" id="stadium" style="border-radius: 20px; float:left;" >
+                                            <option value="1">Lexine Robertot</option>
+                                            <option value="2">Adey Rattray</option>
+                                            <option value="3">Reinhard Thormann</option>
+                                            <option value="4">Sunny Goodspeed</option>
+                                        </select>
+                                        <br><br>
+                                </form>
+                                <form action="/action_page.php">
+                                    <label for="stadium" style="float: left;">Pilih Wasit Pembantu/Hakim Garis:&nbsp;</label>
+                                        <select name="stadium" id="stadium" style="border-radius: 20px; float:left;" >
+                                            <option value="1">Lexine Robertot</option>
+                                            <option value="2">Adey Rattray</option>
+                                            <option value="3">Reinhard Thormann</option>
+                                            <option value="4">Sunny Goodspeed</option>
+                                        </select>
+                                        <br><br>
+                                </form>
+                                <form action="/action_page.php">
+                                    <label for="stadium" style="float: left;">Pilih Wasit Pembantu/Hakim Garis:&nbsp;</label>
+                                        <select name="stadium" id="stadium" style="border-radius: 20px; float:left;" >
+                                            <option value="1">Lexine Robertot</option>
+                                            <option value="2">Adey Rattray</option>
+                                            <option value="3">Reinhard Thormann</option>
+                                            <option value="4">Sunny Goodspeed</option>
+                                        </select>
+                                        <br><br>
+                                </form>
+                                <form action="/action_page.php">
+                                    <label for="stadium" style="float: left;">Pilih Wasit Cadangan:&nbsp;</label>
+                                        <select name="stadium" id="stadium" style="border-radius: 20px; float:left;" >
+                                            <option value="1">Lexine Robertot</option>
+                                            <option value="2">Adey Rattray</option>
+                                            <option value="3">Reinhard Thormann</option>
+                                            <option value="4">Sunny Goodspeed</option>
+                                        </select>
+                                        <br><br>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr style="color: #55509c;">
+                                <th>Tim 1</th>
+                                <th>Tim 2</th>
+                        </tr>
+                        <tr style="color: #55509c;">
+                            <th>
+                                <form action="/action_page.php">
+                                    <!-- <label for="stadium">Pilih Wasit Cadangan:</label> -->
+                                        <select name="stadium" id="stadium" style="border-radius: 20px;">
+                                          <option value="1">Red Lions</option>
+                                          <option value="2">White Tigers</option>
+                                          <option value="3">Black Jackets</option>
+                                        </select>
+                                        <br><br>
+                                </form>
+                            </th>
+                            <th>
+                                <form action="/action_page.php">
+                                    <!-- <label for="stadium">Pilih Wasit Cadangan:</label> -->
+                                            <select name="stadium" id="stadium" style="border-radius: 20px;">
+                                                <option value="1">Red Lions</option>
+                                                <option value="2">White Tigers</option>
+                                                <option value="3">Black Jackets</option>
+                                            </select>
+                                        <br><br>
+                                </form>
+                            </th>
+                        </tr>
+                        <tr style="color: #55509c;">
+                            <th colspan="2">
+                                <input type="submit" value="Submit"> 
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>

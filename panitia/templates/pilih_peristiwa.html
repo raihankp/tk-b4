@@ -1,0 +1,273 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    {% include 'navbar_panitia.html' %}
+
+    <title>Mulai Pertandingan</title>
+    <style>
+        table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th,
+        td {
+            padding: 20px 100px;
+            margin: 5px;
+            border: 1px solid black;
+        }
+        th {
+            color: #55509c;
+        }
+        a {
+            color: #7067f5;
+            font-size: 16px;
+            transition: all 0.3s ease 0s;
+        }
+        a:hover {
+            color: #5248df;
+            font-size: large;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .box-content {
+            width: auto;
+            height: auto;
+            padding: 70px 100px;
+            box-shadow: 0 27px 87px rgba(0, 0, 0, 0.37);
+            border-radius: 25px;
+            /* overflow: hidden; */
+        }
+        .page-title {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .content {
+            text-align: center;
+        }
+        .content button {
+            margin: 15px;
+            padding: 15px 80px;
+            color: white;
+        }
+        #submit {
+            color: white;
+            margin: 15px;
+            padding: 15px 80px;
+            cursor: pointer;
+            background-color: #7067f5;
+            border: none;
+            border-radius: 20px;
+            transition: all 0.3s ease 0s;
+        }
+        #submit:hover {
+            background-color: #5248df;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .success-message {
+            color: rgb(38, 169, 117);
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+{% endblock meta %}
+
+{% block content %}
+    <div>
+        <div class="page-title">
+            <h1>Pilih Peristiwa Tim {{data.nama_tim}}</h1>
+        </div>
+
+        <div class="wrapper">
+            <div class="box-content">
+                <div class="content">
+                    <form id="form-peristiwa" method="POST">
+                        <table id="table-peristiwa">
+                            <tr>
+                                <th>Nama Pemain</th>
+                                <th>Peristiwa</th>
+                                <th>Waktu</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="nama_pemain" id="nama_pemain1">
+                                        <option value="0" selected>[None]</option>
+                                        {% for nama in data.nama_pemain %}
+                                            <!-- The Option's Value is UUID -->
+                                            <option value="{{nama.0}}">{{nama.1}} {{nama.2}}</option>
+                                        {% endfor %}
+                                    </select>   
+                                    
+                                </td>
+                                <td>
+                                    <select name="peristiwa" id="peristiwa1">
+                                        <option value="0" selected>[None]</option>
+                                        <option value="Kartu Kuning">Kartu Kuning</option>
+                                        <option value="Kartu Merah">Kartu Merah</option>
+                                        <option value="Assist">Assist</option>
+                                        <option value="Gol">Gol</option>
+                                    </select>      
+                                </td>
+                                <td>
+                                    <input type="datetime-local" id="waktu1" name="waktu">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="nama_pemain" id="nama_pemain2">
+                                        <option value="0" selected>[None]</option>
+                                        {% for nama in data.nama_pemain %}
+                                            <!-- The Option's Value is UUID -->
+                                            <option value="{{nama.0}}">{{nama.1}} {{nama.2}}</option>
+                                        {% endfor %}
+                                    </select>   
+                                    
+                                </td>
+                                <td>
+                                    <select name="peristiwa" id="peristiwa2">
+                                        <option value="0" selected>[None]</option>
+                                        <option value="Kartu kuning">Kartu Kuning</option>
+                                        <option value="Kartu Merah">Kartu Merah</option>
+                                        <option value="Assist">Assist</option>
+                                        <option value="Gol">Gol</option>
+                                    </select>      
+                                </td>
+                                <td>
+                                    <input type="datetime-local" id="waktu2" name="waktu">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="nama_pemain" id="nama_pemain3">
+                                        <option value="0" selected>[None]</option>
+                                        {% for nama in data.nama_pemain %}
+                                            <!-- The Option's Value is UUID -->
+                                            <option value="{{nama.0}}">{{nama.1}} {{nama.2}}</option>
+                                        {% endfor %}
+                                    </select>   
+                                    
+                                </td>
+                                <td>
+                                    <select name="peristiwa" id="peristiwa3">
+                                        <option value="0" selected>[None]</option>
+                                        <option value="Kartu kuning">Kartu Kuning</option>
+                                        <option value="Kartu Merah">Kartu Merah</option>
+                                        <option value="Assist">Assist</option>
+                                        <option value="Gol">Gol</option>
+                                    </select>      
+                                </td>
+                                <td>
+                                    <input type="datetime-local" id="waktu3" name="waktu">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="nama_pemain" id="nama_pemain4">
+                                        <option value="0" selected>[None]</option>
+                                        {% for nama in data.nama_pemain %}
+                                            <!-- The Option's Value is UUID -->
+                                            <option value="{{nama.0}}">{{nama.1}} {{nama.2}}</option>
+                                        {% endfor %}
+                                    </select>   
+                                    
+                                </td>
+                                <td>
+                                    <select name="peristiwa" id="peristiwa4">
+                                        <option value="0" selected>[None]</option>
+                                        <option value="Kartu kuning">Kartu Kuning</option>
+                                        <option value="Kartu Merah">Kartu Merah</option>
+                                        <option value="Assist">Assist</option>
+                                        <option value="Gol">Gol</option>
+                                    </select>      
+                                </td>
+                                <td>
+                                    <input type="datetime-local" id="waktu4" name="waktu">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="nama_pemain" id="nama_pemain5">
+                                        <option value="0" selected>[None]</option>
+                                        {% for nama in data.nama_pemain %}
+                                            <!-- The Option's Value is UUID -->
+                                            <option value="{{nama.0}}">{{nama.1}} {{nama.2}}</option>
+                                        {% endfor %}
+                                    </select>   
+                                    
+                                </td>
+                                <td>
+                                    <select name="peristiwa" id="peristiwa5">
+                                        <option value="0" selected>[None]</option>
+                                        <option value="Kartu kuning">Kartu Kuning</option>
+                                        <option value="Kartu Merah">Kartu Merah</option>
+                                        <option value="Assist">Assist</option>
+                                        <option value="Gol">Gol</option>
+                                    </select>      
+                                </td>
+                                <td>
+                                    <input type="datetime-local" id="waktu5" name="waktu">
+                                </td>
+                            </tr>
+                        </table>
+                        <input type="submit" value="Submit" id="submit">
+                    </form>
+                    <div class="message" id="message"></div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            $(document).on("submit", "#form-peristiwa", function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'JSON',
+                    url: "{% url 'panitia:show_pilih_peristiwa' id_pertandingan=data.id_pertandingan nama_tim=data.nama_tim %}",
+                    data: {
+                        pemain1: $("#nama_pemain1 option:selected").val(),
+                        pemain2: $("#nama_pemain2 option:selected").val(),
+                        pemain3: $("#nama_pemain3 option:selected").val(),
+                        pemain4: $("#nama_pemain4 option:selected").val(),
+                        pemain5: $("#nama_pemain5 option:selected").val(),
+                        peristiwa1: $("#peristiwa1 option:selected").val(),
+                        peristiwa2: $("#peristiwa2 option:selected").val(),
+                        peristiwa3: $("#peristiwa3 option:selected").val(),
+                        peristiwa4: $("#peristiwa4 option:selected").val(),
+                        peristiwa5: $("#peristiwa5 option:selected").val(),
+                        waktu1: $("#waktu1").val(),
+                        waktu2: $("#waktu2").val(),
+                        waktu3: $("#waktu3").val(),
+                        waktu4: $("#waktu4").val(),
+                        waktu5: $("#waktu5").val()
+                    },
+                    success: function(data) {
+                        if (data.success == 'true'){
+                            let htmlString = ``
+                            htmlString += `\n
+                            <div class="success-message">${data.message}</div>`
+                            document.getElementById("message").innerHTML = htmlString
+                            setTimeout(function () {
+                                document.location.href = `/manage-pertandingan/mulai-pertandingan/${id_pertandingan}/`
+                            }, 1000); //will call the function after 2 secs.
+                        } else { // Kalau gagal
+                            let htmlString = ``
+                            htmlString += `\n
+                            <div class="error-message">${data.message}</div>`
+                            document.getElementById("message").innerHTML = htmlString
+                        }
+                    }
+                })
+                
+            });
+        </script>
+    </div>
+{% endblock %}

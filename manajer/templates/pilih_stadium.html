@@ -1,0 +1,81 @@
+{% extends 'base_manajer.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Pilih Stadium</title>
+{% endblock meta %}
+
+{% block content %}
+<style>
+    .pilih-stadium {
+      margin: 40px 30px;
+      padding-right: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 5px;
+    }
+
+    input[type="submit"] {
+      background-color: #7067f5;
+      border: none;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0059b3;
+    }
+</style>
+
+<div class="wrapper" style="display: flex; justify-content: center; height: 25vh; margin-top: 100px;">
+    <div class="box">
+        <h2 style="color: #5248df;">Peminjaman Stadium</h2>
+        <div class="pilih-stadium">
+            <form id="pilih-stadium" method="POST">
+                <label for="stadium">Stadium:</label>
+                <select name="stadium" id="stadium">
+                  {% for data in stadium %}
+                    <option value="{{data.id_stadium}}">{{data.nama}}</option>
+                  {% endfor %}
+                </select>
+
+                <label for=""><br></label>
+                <label for="tanggal">Tanggal:</label>
+                <input type="date" id="date-input"> 
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
+    <script>
+      $(document).on("submit", "#pilih-stadium", function (e) {
+          e.preventDefault();
+          $.ajax({
+          type: 'POST',
+          dataType: 'json',
+          url: "{% url 'manajer:pilih_stadium' %}",
+          data: {
+              id: $("#stadium").val(),
+              tanggal: $("#date-input").val(),
+          },
+          success: function(data) {
+            var url = "{% url 'manajer:list_waktu_stadium' '.' ',' %}".replaceAll('.', data.id).replaceAll(',', data.tanggal)
+            document.location.href = url
+          }
+        })
+      });
+  </script>
+</div> 
+{% endblock %}

@@ -1,0 +1,144 @@
+{% comment %} Sebagai template dashboard sekaligus parent dari template yang lainnya {% endcomment %}
+
+{% load static %}
+{% include 'navbar_manajer.html' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block meta %}
+        <title>Dashboard</title>
+        {% endblock meta %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"
+            integrity="sha512-zlWWyZq71UMApAjih4WkaRpikgY9Bz1oXIW5G0fED4vk14JjGlQ1UmkGM392jEULP8jbNMiwLWdM8Z87Hu88Fw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css"
+            integrity="sha512-wJgJNTBBkLit7ymC6vvzM1EcSWeM9mmOu+1USHaRBbHkm6W9EgM0HY27+UtUaprntaYQJF75rc8gjxllKs5OIQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+    </head>
+
+    <body>
+        {% block content %}
+        <div class="page-title">
+            <h1>Dashboard</h1>
+        </div>
+        <div class="wrapper">
+            <div class="box">
+                <div class="sub-box">
+                    <div class="box-image">
+                        <img class="image-manager" src="{% static 'images/user_profile.png' %}">
+                    </div>
+                    <div class="box-text">
+                        <h1>{{profile.nama_depan}} {{profile.nama_belakang}}</h1>
+                        <h3 style="margin-bottom: 10px;">Manajer</h3>
+                        <hr class="solid" style="margin-bottom: 20px;">
+    
+                        <div class="personal-info">
+                            <div class="sec-1">
+                                <h2>Email</h2>
+                                <h3>{{profile.email}}</h3>
+        
+                                <h2>Nomor HP</h2>
+                                <h3>{{profile.nomor_hp}}</h3>
+
+                                <h2>Status</h2>
+                                <h3 style="margin-bottom: 5px;">{{status.stat}}</h3>
+                            </div>
+        
+                            <div class="sec-2">
+                                <h2>Alamat</h2>
+                                <p>{{profile.alamat}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="daftar-tim">
+                {% if tim %}
+                    {% for i in tim %}
+                        <h1 style="margin-bottom: 20px;color: #7067f5;">Tim - {{i.nama_tim}}</h1>
+                    {% endfor %}
+                {% else %}
+                    <h1 style="margin-bottom: 20px;color: #7067f5;">Tim</h1>
+                {% endif %}
+                
+                {% if not tim %}
+                    <h3 style="margin-bottom: 20px;color: #55509c; text-align: center;">Belum Membuat Tim</h3>
+                {% elif not pemain and not pelatih %}
+                    <h3 style="margin-bottom: 20px;color: #55509c; text-align: center;">Belum Memiliki Pelatih dan Pemain</h3>
+                {% else %}
+                    <table border="1px">
+                    {% if pemain %}
+                        <tr>
+                            <th colspan="7">Tim</th>
+                        </tr>
+                        <tr>
+                            <th colspan="7">Pemain</th>
+                        </tr>
+                        <tr>
+                            <th>Nama Pemain</th>
+                            <th>No HP</th>
+                            <th>Tanggal Lahir</th>
+                            <th>IsCaptain</th>
+                            <th>Posisi</th>
+                            <th>NPM</th>
+                            <th>Jenjang</th>
+                        </tr>
+                        {% for data in pemain %}
+                            <tr>
+                                <td>{{data.nama_depan}} {{data.nama_belakang}}</td>
+                                <td>{{data.nomor_hp}}</td>
+                                <td>{{data.tgl_lahir}}</td>
+                                {% if data.is_captain == True %}
+                                    <td>Yes</td>
+                                {% else %}
+                                    <td>No</td>
+                                {% endif %}
+                                <td>{{data.posisi}}</td>
+                                <td>{{data.npm}}</td>
+                                <td>{{data.jenjang}}</td>
+                            </tr>
+                        {% endfor %}   
+                    {% endif %}
+
+                    {% if pelatih %}
+                        <tr>
+                            <th colspan="7">Pelatih</th>
+                        </tr>
+                        <tr>
+                            <th>Nama Pelatih</th>
+                            <th>No HP</th>
+                            <th>Email</th>
+                            <th colspan="2">Alamat</th>
+                            <th colspan="2">Spesialisasi</th>
+                        </tr>  
+                        {% for data in pelatih %}
+                            <tr>
+                                <td>{{data.nama_depan}} {{data.nama_belakang}}</td>
+                                <td>{{data.nomor_hp}}</td>
+                                <td>{{data.email}}</td>
+                                <td colspan="2">{{data.alamat}}</td>
+                                <td colspan="2">{{data.spesialisasi}}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </table>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    {% include 'navbar_penonton.html' %}
+    <title>Beli Tiket</title>
+
+    <style>
+        table {
+            width: 80%;
+            text-align: center;
+            border-collapse: collapse;
+            margin: 30px auto 20px;
+        }
+        th,
+        td {
+            padding: 15px;
+            margin: 5px;
+            border: 1px solid black;
+        }
+        th {
+            color: #55509c;
+            background-color:#f2f9ff;
+        }
+        a {
+            color: #7067f5;
+            font-size: 16px;
+            transition: all 0.3s ease 0s;
+        }
+        a:hover {
+            color: #5248df;
+            font-size: large;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 50px;
+        }
+        .box-content {
+            width: auto;
+            height: auto;
+            margin: 10px 10px;
+            padding: 50px 80px;
+            box-shadow: 0 27px 87px rgba(0, 0, 0, 0.37);
+            border-radius: 25px;
+            overflow: hidden;
+        }
+        .page-title {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        .announcement {
+            text-align: center; 
+            padding: 20px;
+            margin: 40px;
+        }
+        .content button {
+            margin: 20px;
+            padding: 15px 80px;
+            color: white;
+        }
+        .content {
+            width: auto;
+            text-align: center;
+        }
+        .content-title {
+            font-size: 25px;
+            color: #55509c;
+        }
+
+        input[type="submit"] {
+            background-color: #7067f5;
+            border: none;
+            border-radius: 20px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+        }
+      
+        input[type="submit"]:hover {
+            background-color: #0059b3;
+        }
+    </style>
+
+{% endblock meta %}
+
+{% block content %}
+    <div class="page-title">
+        <h1>Beli Tiket</h1>
+    </div>
+
+    <div class="wrapper">
+        <div class="content box-content">
+            <div class="content">
+                <form id='pilih-tiket' method="POST" action="{% url 'penonton:show_beli_tiket' %}?id={{ id_pertandingan }}">
+                    {% csrf_token %}
+                    <label for="jenis_tiket">Jenis Tiket: </label>
+                    <select name="jenis_tiket" id="jenis_tiket" required>
+                        <option value="" selected disabled hidden>Pilih Jenis Tiket</option>
+                        <option value="VIP">VIP</option>
+                        <option value="Main East">Main East</option>
+                        <option value="Kategori 1">Kategori 1</option>
+                        <option value="Kategori 2">Kategori 2</option>
+                    </select>
+                    <br><br>
+                    <label for="jenis_pembayaran">Pembayaran: </label>
+                    <select name="jenis_pembayaran" id="jenis_pembayaran" required>
+                        <option value="" selected disabled hidden>Pilih Pembayaran</option>
+                        <option value="ShopeePay">ShopeePay</option>
+                        <option value="GoPay">GoPay</option>
+                        <option value="Qris">Qris</option>
+                        <option value="Transfer Bank">Transfer Bank</option>
+                    </select>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>  
+        </div>
+
+        <script>
+            $(document).on("submit", "#pilih-tiket", function (e) {
+            e.preventDefault();
+        
+            $.ajax({
+              type: 'POST',
+              dataType: 'json',
+              url: "{% url 'penonton:show_beli_tiket' %}?id={{ id_pertandingan }}",
+              data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                username: $("#jenis_tiket option:selected").val(),
+                password: $("#jenis_pembayaran option:selected").val(),
+              },
+              success: function(data) {
+                if (data.success == 'false') {
+                  $.toast({   // Kalau proses registrasi gagal
+                        heading: 'Failed',
+                        text: data.message,
+                        bgColor: "#971E0B",
+                        position: {
+                          right:30,
+                          top:80,
+                        },
+                        icon:"info",
+                    });
+                } else {
+                  $.toast({ // Kalau proses registrasi berhasil
+                        heading: 'Success',
+                        text: data.message,
+                        bgColor: "#13970B",
+                        position: {
+                        right:30,
+                        top:80,
+                      },
+                      icon: 'success',
+                      hideAfter: 1500,
+                    });
+        
+                  setTimeout(function () {
+                    document.location.href = "/penonton"; //will redirect to your blog page (an ex: blog.html)
+                  }, 2000); //will call the function after 2 secs.
+                  }
+                }
+              })
+            });
+          </script>
+    </div> 
+
+    
+{% endblock content %}
+

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+    {% include 'navbar_panitia.html' %}
+
+    <title>Peristiwa Tim [Nama Tim]</title>
+    <style>
+        table {
+            width: 70%;
+            text-align: center;
+            border-collapse: collapse;
+            margin: 40px auto;
+        }
+        th,
+        td {
+            padding: 15px;
+            margin: 5px;
+            border: 1px solid black;
+        }
+        th {
+            color: #55509c;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .box-content {
+            width: auto;
+            height: auto;
+            margin: 50px 50px;
+            padding: 30px;
+            box-shadow: 0 27px 87px rgba(0, 0, 0, 0.37);
+            border-radius: 25px;
+            overflow: hidden;
+        }
+        .page-title {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .content-title {
+            font-size: 25px;
+            color: #7067f5;
+            text-align: center;
+        }
+        .content button {
+            margin: 15px;
+            padding: 15px 80px;
+            color:white;
+        }
+    </style>
+{% endblock meta %}
+
+{% block content %}
+    <div class="page-title">
+        <h1>Peristiwa Tim {{nama_tim}}</h1>
+    </div>
+
+    <div class="wrapper">
+        <div class="box-content">
+            <div class="content">
+                <div class="content-title">
+                    <!-- <h4>Peristiwa Tim</h4> -->
+                </div>
+    
+    
+                <div style="text-align: center; margin: 20px;">
+                    <table style="width: 1000px; margin-left: auto; margin-right: auto; border: 1px solid black; padding: 10px;">
+                        <tr style="color: #55509c;">
+                                <th>Nama Pemain</th>
+                                <th>Peristiwa</th>
+                        </tr>
+                        {% for data in peristiwa %}
+                            <tr>
+                                <td>{{data.nama_depan}} {{data.nama_belakang}}</td>
+                                <td>{{data.jenis}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="display: flex; justify-content: center;">
+                    <button onclick="window.location.href='{% url 'panitia:show_manage_pertandingan' %}'">Kembali</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock content %}

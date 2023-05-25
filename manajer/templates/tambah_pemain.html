@@ -1,0 +1,104 @@
+{% extends 'base_manajer.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Tambah Pemain</title>
+{% endblock meta %}
+
+{% block content %}
+<style>
+    .tambah-pemain {
+      margin: 40px 30px;
+      padding-right: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 5px;
+    }
+
+    input[type="submit"] {
+      background-color: #7067f5;
+      border: none;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0059b3;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 0.8rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .success-message {
+      color: rgb(38, 169, 117);
+      font-size: 0.8rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+</style>
+
+<div class="wrapper" style="display: flex; justify-content: center; height: 25vh; margin-top: 100px;">
+    <div class="box">
+        <h2 style="color: #5248df;">Daftar Pemain</h2>
+        <div class="tambah-pemain">
+            <form id='add-pemain' method="POST">
+                <label for="pemain">Pemain yang mau didaftarkan:</label>
+                <select name="pemain" id="pemain">
+                  {% for data in pemain %}
+                    <option value="{{data.id_pemain}}">{{data.nama_depan}} {{data.nama_belakang}} - {{data.posisi}}</option>
+                  {% endfor %}
+                </select>
+                <input type="submit" value="Submit"> 
+            </form>
+            <div id="message"></div> 
+        </div>
+    </div>
+
+    <script>
+      $(document).on("submit", "#add-pemain", function (e) {
+          e.preventDefault();
+          $.ajax({
+          type: 'POST',
+          dataType: 'json',
+          url: "{% url 'manajer:tambah_pemain' %}",
+          data: {
+              pemain: $("#pemain option:selected").val(),
+          },
+          success: function(data) {
+              if (data.success == 'true') { // Kalau registrasi tim berhasil
+                  let htmlString = ``
+                  htmlString += `\n
+                  <div class="success-message">${data.message}</div>`
+                  document.getElementById("message").innerHTML = htmlString
+                  setTimeout(function () {
+                      document.location.href = '/manajer/mengelola_tim'
+                  }, 1000); //will call the function after 2 secs.
+              } else { // Kalau registrasi tim gagal
+                  let htmlString = ``
+                  htmlString += `\n
+                  <div class="error-message">${data.message}</div>`
+                  document.getElementById("message").innerHTML = htmlString
+              }
+          }
+        })
+      });
+  </script>
+
+</div> 
+{% endblock %}

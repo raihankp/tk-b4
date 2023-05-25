@@ -1,0 +1,225 @@
+{% extends 'base_manajer.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Mengelola Tim</title>
+{% endblock meta %}
+
+{% block content %}
+
+<style>
+    .register-tim {
+      margin: 40px 30px;
+      padding-right: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      border: none;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      width: 100%;
+    }
+
+    input[type="submit"] {
+      background-color: #7067f5;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0059b3;
+    }
+
+    .separator h5 {
+        color: #6258e6;
+    }
+    .separator h5:hover {
+    color: #5248df;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 0.8rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .success-message {
+      color: rgb(38, 169, 117);
+      font-size: 0.8rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+</style>
+
+<div class="page-title" style="text-align: center;">
+    <h1>Mengelola Tim</h1>
+</div>
+
+{% if not tim %}
+    <div class="wrapper" style="display: flex; justify-content: center; height: 25vh;">
+        <div class="box">
+            <h2>Form Registrasi</h2>
+            <div class="register-tim">
+                <form id="register-tim" method="POST">
+                    <label for="username">Nama Tim</label>
+                    <input type="text" id="nama-tim" name="tim" placeholder="Masukkan Nama Tim" required>
+                    <label><br></label>
+                    <label for="username">Nama Universitas</label>
+                    <input type="text" id="nama-univ" name="universitas" placeholder="Masukkan Nama Universitas" required>
+
+                    <input type="submit" value="Daftar"> 
+                </form>
+                <div id="message"></div> 
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).on("submit", "#register-tim", function (e) {
+            e.preventDefault();
+            $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "{% url 'manajer:mengelola_tim' %}",
+            data: {
+                tim: $("#nama-tim").val(),
+                universitas: $("#nama-univ").val(),
+            },
+            success: function(data) {
+                if (data.success == 'true') { // Kalau registrasi tim berhasil
+                    let htmlString = ``
+                    htmlString += `\n
+                    <div class="success-message">${data.message}</div>`
+                    document.getElementById("message").innerHTML = htmlString
+                    setTimeout(function () {
+                        document.location.href = '/manajer/mengelola_tim'
+                    }, 1000); //will call the function after 2 secs.
+                } else { // Kalau registrasi tim gagal
+                    let htmlString = ``
+                    htmlString += `\n
+                    <div class="error-message">${data.message}</div>`
+                    document.getElementById("message").innerHTML = htmlString
+                }
+            }
+          })
+        });
+    </script>
+
+{% else %}
+    <div class="wrapper" style="display: flex; justify-content: center; height: 25vh;">
+        <div class="box">
+            <div class="daftar-tim">
+                {% for i in tim %}
+                    <h1 style="margin-bottom: 20px;color: #7067f5;">{{i.nama_tim}}</h1>
+                {% endfor %}
+
+                {% if not pemain and not pelatih %}
+                    <h4 style="margin-bottom: 20px;color: #55509c; text-align: center;">Belum Memiliki Pelatih dan Pemain</h4>
+                {% else %}
+                    <table border="1px">
+                    {% if pemain %}
+                        <tr>
+                            <th colspan="8">Tim</th>
+                        </tr>
+                        <tr>
+                            <th colspan="8">Pemain</th>
+                        </tr>
+
+                        <tr>
+                            <th>Nama Pemain</th>
+                            <th>No HP</th>
+                            <th>Tanggal Lahir</th>
+                            <th>IsCaptain</th>
+                            <th>Posisi</th>
+                            <th>NPM</th>
+                            <th>Jenjang</th>
+                            <th>Action</th>
+                        </tr>
+                        {% for data in pemain %}
+                            <tr>
+                                <td>{{data.nama_depan}} {{data.nama_belakang}}</td>
+                                <td>{{data.nomor_hp}}</td>
+                                <td>{{data.tgl_lahir}}</td>
+                                {% if data.is_captain == True %}
+                                    <td>Yes</td>
+                                {% else %}
+                                    <td>No</td>
+                                {% endif %}
+                                <td>{{data.posisi}}</td>
+                                <td>{{data.npm}}</td>
+                                <td>{{data.jenjang}}</td>
+                                <td>
+                                <div class="separator" style="display: flex; justify-content: space-between; flex-direction: column;">
+                                    {% if not data.is_captain%}
+                                        <a href="{% url 'manajer:make_captain' data.id_pemain %}"><h5>Make Captain</h5></a>
+                                        <br>
+                                    {% endif %}
+                                    <a href="{% url 'manajer:delete_pemain' data.id_pemain %}"><h5>Delete</h5></a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                
+                    {% if pelatih %}
+                        <tr>
+                            <th colspan="8">Pelatih</th>
+                        </tr>
+
+                        <tr>
+                            <th>Nama Pelatih</th>
+                            <th>No HP</th>
+                            <th>Email</th>
+                            <th colspan="2">Alamat</th>
+                            <th colspan="2">Spesialisasi</th>
+                            <th>Action</th>
+                        </tr>
+
+                        {% for data in pelatih %}
+                            <tr>
+                                <td>{{data.nama_depan}} {{data.nama_belakang}}</td>
+                                <td>{{data.nomor_hp}}</td>
+                                <td>{{data.email}}</td>
+                                <td colspan="2">{{data.alamat}}</td>
+                                <td colspan="2">{{data.spesialisasi}}</td>
+                                <td>
+                                    <div class="separator" style="display: flex; justify-content: space-between; flex-direction: column;">
+                                        <a href="{% url 'manajer:delete_pelatih' data.id_pelatih %}"><h5>Delete</h5></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </table>
+                {% endif %}
+            </div>
+            <div class="tambah-anggota" style="display: flex; justify-content: center; background-color: #e3e9f7; margin-bottom: 30px; height: min-content;">
+                <a href="{% url 'manajer:tambah_pemain' %}"><button style="color: #fefefe;">Add Pemain</button></a>
+                <a href="{% url 'manajer:tambah_pelatih' %}"><button style="color: #fefefe;">Add Pelatih</button></a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}

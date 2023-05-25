@@ -1,0 +1,48 @@
+{% extends 'base_manajer.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Peminjaman Stadium</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="page-title" style="text-align: center;">
+    <h1>Peminjaman Stadium</h1>
+</div>
+
+<div class="wrapper" style="display: flex; justify-content: center; height: 25vh;">
+    <div class="box">
+        <div class="list-pemesanan" style=" margin: 30px 30px;">
+            <table style="width:max-content; border-collapse: collapse;"border="1px">
+
+                <tr>
+                    <th colspan="2">List Stadium</th>
+                </tr>
+
+                <tr>
+                    <th>Stadium</th>
+                    <th>Waktu</th>
+                </tr>
+
+                {% comment %} Row buat nampilin data pemain {% endcomment %}
+
+                {% for data in stadium %}
+                    <tr>
+                        <td>{{ data.nama }}</td>
+                        <td>{{ data.date }}, {{ data.start_time }} - {{ data.end_time }}</td>
+                    </tr>
+
+                {% endfor %}
+
+                <tr>
+                    <td colspan="2">
+                        <div class="button-pesan">
+                            <a href="{% url 'manajer:pilih_stadium' %}" class="hover-style"><button style="color: #fefefe;">Pesan</button></a>
+                        </div>
+                    </td>
+                </tr>
+              </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

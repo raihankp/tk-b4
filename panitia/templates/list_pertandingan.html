@@ -1,0 +1,111 @@
+{% comment %} Sebagai template dashboard sekaligus parent dari template yang lainnya {% endcomment %}
+
+{% load static %}
+{% include 'navbar_panitia.html' %}
+
+<!DOCTYPE html>
+<html>
+    {% block meta %}
+    <head>
+        <title>Pembuatan Pertandingan</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    </head>
+    {% endblock meta %}
+
+    <style>
+        table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        th,
+        td {
+            padding: 5px;
+            margin: 5px;
+            border: 1px solid black;
+        }
+        th {
+            color: #55509c;
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 25vh;
+        }
+
+        button {
+            padding: 5px 15px;
+        }
+    </style>
+
+    <body>
+        {% block content %}
+        <div class="page-title">
+            <h1>Pembuatan Pertandingan</h1>
+        </div>
+        <div class="wrapper">
+            <div class="box">
+                <div class="daftar-rapat" style="margin: 40px 30px;">
+                    <!-- <h1 style="margin-bottom: 20px;color: #7067f5;">List Pertandingan</h1> -->
+                    <table style="width: 100%; text-align: center; border-collapse: collapse;" border="1">
+                        <tr>
+                            <th colspan="4">List Pertandingan</td>
+                        </tr>
+                        <tr style="color: #55509c;">
+                                <th>Grup A</th>
+                                <th>Action</th>
+                                <th>Grup B</th>
+                                <th>Action</th>
+                        </tr>
+                        <tr>
+                            <td>A vs B</td>
+                            <td><button style="color:white">Update</button><button style="background-color: white;">Delete</button></td>
+                            <td>I vs J</td>
+                            <td><button style="color:white">Update</button><button style="background-color: white;">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>C vs D</td>
+                            <td><button style="color:white">Update</button><button style="background-color: white;">Delete</button></td>
+                            <td>K vs L</td>
+                            <td><button style="color:white">Update</button><button style="background-color: white;">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>E vs F</td>
+                            <td><button style="color:white">Update</button><button style="background-color: white;">Delete</button></td>
+                            <td>M vs N</td>
+                            <td><button style="color:white">Update</button><button style="background-color: white;">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>G vs H</td>
+                            <td><button style="color:white">Update</button><button style="background-color: white;">Delete</button></td>
+                            <td>? vs ?</td>
+                            <td><button style="color:white">Add</button></td>
+                        </tr>
+                        <tr style="color: #55509c;">
+                            <th>Grup C</th>
+                            <th>Action</th>
+                            <th>Grup D</th>
+                            <th>Action</th>
+                        </tr>
+                        <tr>
+                            <td>? vs ?</td>
+                            <td><button style="color:white">Add</button></td>
+                            <td>? vs ?</td>
+                            <td><button style="color:white">Add</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>

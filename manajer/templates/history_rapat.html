@@ -1,0 +1,139 @@
+{% comment %} Sebagai template dashboard sekaligus parent dari template yang lainnya {% endcomment %}
+
+{% load static %}
+{% include 'navbar_manajer.html' %}
+
+<!DOCTYPE html>
+<html>
+    {% block meta %}
+    <head>
+        <title>History Rapat</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    </head>
+    {% endblock meta %}
+
+    <style>
+        table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+            margin: 30px auto 20px;
+        }
+        th,
+        td {
+            padding: 15px;
+            margin: 5px;
+            border: 1px solid black;
+        }
+        th {
+            color: #55509c;
+            background-color:#f2f9ff;
+        }
+        a {
+            color: #7067f5;
+            font-size: 16px;
+            transition: all 0.3s ease 0s;
+        }
+        a:hover {
+            color: #5248df;
+            font-size: large;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 50px;
+            align-items: flex-start;
+
+        }
+        .box-content {
+            width: auto;
+            height: auto;
+            margin: 10px 10px;
+            padding: 50px 80px;
+            box-shadow: 0 27px 87px rgba(0, 0, 0, 0.37);
+            border-radius: 25px;
+            overflow: hidden;
+        }
+        .page-title {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        .content button {
+            margin: 20px;
+            padding: 15px 80px;
+            color: white;
+        }
+        .content {
+            text-align: center;
+            width: auto;
+        }
+        .content-title {
+            text-align: center;
+            font-size: 25px;
+            color: #7067f5;
+            margin: 20px 0px;
+        }
+
+        .my-div {
+            margin: 20px;
+        }
+
+        input[type="submit"] {
+            background-color: #7067f5;
+            border: none;
+            border-radius: 20px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+        }
+      
+        input[type="submit"]:hover {
+            background-color: #0059b3;
+        }
+    </style>
+
+    <body>
+        {% block content %}
+        <div class="page-title">
+            <h1>History Rapat</h1>
+        </div>
+        <div class="wrapper">
+            <div class="box">
+                <div class="daftar-rapat" style="margin: 40px 30px;">
+                    <h1 style="margin-bottom: 20px;color: #7067f5;">List Rapat</h1>
+                    <table style="width: 100%; text-align: center; border-collapse: collapse;" border="1">
+                        <tr style="color: #55509c;">
+                                <th>Rapat Tim</th>
+                                <th>Nama Panitia</th>
+                                <th>Stadium</th>
+                                <th>Tanggal dan Waktu</th>
+                                <th>Action</th>
+                        </tr>
+                        {% for data in rapat %}
+                        <tr>
+                            <td>{{ data.nama_tim }}</td>
+                            <td>{{ data.nama_depan }} {{ data.nama_belakang }}</td>
+                            <td>{{ data.nama_stadium}}</td>
+                            <td>{{ data.date }}, {{ data.start_time }}</td>
+                            <td>
+                                <a href="{% url 'manajer:laporan_rapat' %}?date={{ data.date }}&start_time={{data.start_time}}&perwakilan_panitia={{ data.perwakilan_panitia }}&manajer_tim_a={{ data.manajer_tim_a }}&manajer_tim_b={{ data.manajer_tim_b }}">
+                                    Lihat Laporan Rapat
+                                </a>                                
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>

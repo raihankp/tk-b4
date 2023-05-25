@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+  <title>Register Page</title>
+  <style>
+    body {
+      background-color: #E3E9F7;
+      font-family: Arial, sans-serif;
+    }
+
+    #login-box {
+      /* background-color: #fff; */
+      border-radius: 20px;
+      box-shadow: 0 2px 50px rgba(0, 0, 0, 0.3);
+      margin: 50px auto;
+      max-width: 400px;
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    label, .row {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="password"]{
+      border: none;
+      border-radius: 20px;
+      background-color: #fff;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      width: 100%;
+    }
+
+    input[type="submit"] {
+      background-color: #7067f5;
+      border: none;
+      border-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0059b3;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 0.8rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+    /* input[type="radio"] {
+        margin-left:10px;
+    } */
+  </style>
+{% endblock meta %}
+
+{% block content %}
+{% include 'navbar_regist.html' %}
+
+  <div id="login-box">
+    <h2>Form Registrasi</h2>
+    <form id="form-register" method="POST">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" placeholder="Masukkan username" required>
+      <label><br></label>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Masukkan password" required>
+      <label><br></label>
+      <label for="nama_depan">Nama Depan:</label>
+      <input type="text" id="nama_depan" name="nama_depan" placeholder="Masukkan nama depan" required>
+      <label><br></label>
+      <label for="nama_belakang">Nama Belakang:</label>
+      <input type="text" id="nama_belakang" name="nama_belakang" placeholder="Masukkan nama belakang" required>
+      <label><br></label>
+      <label for="nomor_hp">Nomor HP:</label>
+      <input type="text" id="nomor_hp" name="nomor_hp" placeholder="Masukkan nomor hp" required>
+      <label><br></label>
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" placeholder="Masukkan email" required>
+      <label><br></label>
+      <label for="alamat">Alamat:</label>
+      <input type="text" id="alamat" name="alamat" placeholder="Masukkan alamat" required>
+      <label><br></label>
+
+      <label for="password">Status:</label>
+        <div class="row">
+          <input type="radio" name="mahasiswa" id="mahasiswa" value="" /> Mahasiswa
+          <input type="radio" name="dosen" id="dosen" value="" /> Dosen
+          <input type="radio" name="tendik" id="tendik" value="" /> Tendik
+          <input type="radio" name="alumni" id="alumni" value="" /> Alumni
+          <input type="radio" name="umum" id="umum" value="" /> Umum
+        </div>
+      <input type="submit" value="Daftar"> 
+    </form>
+  </div>
+
+  <script>
+    $(document).on("submit", "#form-register", function (e) {
+    e.preventDefault();
+
+    // Handling Radio Button Values
+    if($('#mahasiswa').is(':checked')) { 
+        $('#mahasiswa').val('Mahasiswa');
+    }
+
+    if($('#dosen').is(':checked')) { 
+        $('#dosen').val('Dosen');
+    }
+
+    if($('#tendik').is(':checked')) { 
+      $('#tendik').val('Tendik');
+    }
+
+    if($('#alumni').is(':checked')) { 
+        $('#alumni').val('Alumni');
+    }
+
+    if($('#umum').is(':checked')) { 
+        $('#umum').val('Umum');
+    }
+
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: "{% url 'landing_page:register_manajer' %}",
+      data: {
+        username: $("#username").val(),
+        password: $("#password").val(),
+        nama_depan: $("#nama_depan").val(),
+        nama_belakang: $("#nama_belakang").val(),
+        nomor_hp: $("#nomor_hp").val(),
+        email: $("#email").val(),
+        alamat: $("#alamat").val(),
+        mahasiswa: $("#mahasiswa").val(),
+        dosen: $("#dosen").val(),
+        tendik: $("#tendik").val(),
+        alumni: $("#alumni").val(),
+        umum: $("#umum").val(),
+      },
+      success: function(data) {
+        if (data.success == 'false') {
+          $.toast({   // Kalau proses registrasi gagal
+                heading: 'Failed',
+                text: data.message,
+                bgColor: "#971E0B",
+                position: {
+                  right:30,
+                  top:80,
+                },
+                icon:"info",
+            });
+        } else {
+          $.toast({ // Kalau proses registrasi berhasil
+                heading: 'Success',
+                text: data.message,
+                bgColor: "#13970B",
+                position: {
+                right:30,
+                top:80,
+              },
+              icon: 'success',
+              hideAfter: 1500,
+            });
+
+          setTimeout(function () {
+            document.location.href = "/login"; //will redirect to your blog page (an ex: blog.html)
+          }, 2000); //will call the function after 2 secs.
+          }
+        }
+      })
+    });
+  </script>
+{% endblock content %}
+
+
+<!-- links -->
+<!-- https://stackoverflow.com/questions/47356366/html-radio-buttons-allow-the-selection-of-multiple-options -->
+<!-- https://stackoverflow.com/questions/19014766/how-can-i-get-input-radio-elements-to-horizontally-align -->
